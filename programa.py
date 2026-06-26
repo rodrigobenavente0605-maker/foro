@@ -6,29 +6,55 @@ adivina todas las letras que conforma la palabra"""
 
 import random
 
+def pedir_un_caracter(mensaje,letras_registradas):
+    while True:
+        entrada = input(mensaje)
+        
+        if len(entrada) == 1:
+            return entrada  
+        
+        print("Error: Por favor, ingresa solo un carácter.")
+
+
 PALABRAS = ["uno","dos","tres"]
 
 CLAVE = random.choice(PALABRAS)
 
 intento = ""
 
+letras_registradas = []
+
+ganó = 0
+
 for i in range(5):
-    print(f"\n\t ..::  INTENTO N°{5-i}  :..")
+    print(f"\n\t ..::  INTENTO N°{i+1}  :..")
 
 
-    letra = input("Digite una letra de la palabra : ")
-    if letra in CLAVE:
+    letra = pedir_un_caracter("Introduce un solo carácter: ",letras_registradas)
+
+    if letra in letras_registradas:
+        print("\nERROR: ESA LETRA YA FUE REGISTRADA")
+
+    elif letra in CLAVE:
         intento+= letra
+        letras_registradas.append(letra)
         print(f" LA LETRA {letra} SI ESTA EN LA PALABRA CLAVE  ✅")
         
         if len(intento) == len(CLAVE):
-            print(f"FELICIDADES : LA PALABRA ES -> {CLAVE}   ")
+            print(f"\n\t ¡¡¡¡¡   FELICIDADES : LA PALABRA ES -> {CLAVE}   !!!!!")
+            gano=1
             break
     
     else:
         print(f" LA LETRA {letra}  NO ESTA EN LA PALABRA CLAVE ❌ ")
+    
 
 
+
+print("="*50)
+
+if ganó == 0 :
+    print(f"\n\t  LA PALABRA ES -> {CLAVE}   ")
 
 print("\n\t ..::   PROGRAMA FINALIZADO   ::..")
     
