@@ -42,7 +42,7 @@ public class Programa {
 
             if (clave.indexOf(letra) != -1) {
                 letrasCorrectas.add(letra);
-                System.out.println(" LA LETRA " + letra + " SI ESTA EN LA PALABRA CLAVE");
+                System.out.println(" LA LETRA " + letra + " SI ESTA EN LA PALABRA CLAVE ✅ ");
 
                 gana = true;
 
@@ -56,7 +56,7 @@ public class Programa {
                 }
             } else {
                 intentos--;
-                System.out.println(" LA LETRA " + letra + " NO ESTA EN LA PALABRA CLAVE");
+                System.out.println(" LA LETRA " + letra + " NO ESTA EN LA PALABRA CLAVE ❌ ");
             }
 
             String palabraMostrada = "";
