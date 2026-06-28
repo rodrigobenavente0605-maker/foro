@@ -1,60 +1,77 @@
-"""11. Escribe un programa para adivinar una palabra, el programa escoger una palabra de una lista
-aleatoria de palabras y el usuario tiene que escoger una letra hasta encontrar todas las letras
-que conforman la palabra, el usuario tiene hasta 5 intentos para adivinar la palabra, si se
-equivoca al escoger la letra se le debe reducir un intento, el juego acaba cuando el usuario
-adivina todas las letras que conforma la palabra"""
+"""Juego para adivinar una palabra letra por letra.
+
+El programa elige una palabra al azar. El usuario tiene hasta 5 errores para
+descubrir todas las letras que forman la palabra.
+"""
 
 import random
 
-def pedir_un_caracter(mensaje,letras_registradas):
+
+def pedir_un_caracter(mensaje, letras_registradas):
     while True:
-        entrada = input(mensaje)
-        
-        if len(entrada) == 1:
-            return entrada  
-        
-        print("Error: Por favor, ingresa solo un carácter.")
+        entrada = input(mensaje).lower()
+
+        if len(entrada) != 1:
+            print("Error: Por favor, ingresa solo un caracter.")
+        elif entrada in letras_registradas:
+            print("Error: Por favor, ingresa una letra no repetida.")
+        else:
+            return entrada
 
 
-PALABRAS = ["uno","dos","tres"]
+PALABRAS = [
+    "uno",
+    "dos",
+    "tres",
+    "cuatro",
+    "cinco",
+    "seis",
+    "siete",
+    "ocho",
+    "nueve",
+    "diez",
+]
 
 CLAVE = random.choice(PALABRAS)
-
-intento = ""
-
 letras_registradas = []
+letras_correctas = []
+intentos = 5
+gana = False
 
-ganó = 0
+while intentos > 0 and not gana:
+    print(f"\n\t ..::  INTENTOS RESTANTES: {intentos}  ::..")
 
-for i in range(5):
-    print(f"\n\t ..::  INTENTO N°{i+1}  :..")
+    letra = pedir_un_caracter("Introduce un solo caracter: ", letras_registradas)
+    letras_registradas.append(letra)
 
+    if letra in CLAVE:
+        letras_correctas.append(letra)
+        print(f" LA LETRA {letra} SI ESTA EN LA PALABRA CLAVE ✅ ")
 
-    letra = pedir_un_caracter("Introduce un solo carácter: ",letras_registradas)
+        gana = True
 
-    if letra in letras_registradas:
-        print("\nERROR: ESA LETRA YA FUE REGISTRADA")
-
-    elif letra in CLAVE:
-        intento+= letra
-        letras_registradas.append(letra)
-        print(f" LA LETRA {letra} SI ESTA EN LA PALABRA CLAVE  ✅")
-        
-        if len(intento) == len(CLAVE):
-            print(f"\n\t ¡¡¡¡¡   FELICIDADES : LA PALABRA ES -> {CLAVE}   !!!!!")
-            gano=1
-            break
-    
+        for letra_clave in CLAVE:
+            if letra_clave not in letras_registradas:
+                gana = False
+                break
     else:
-        print(f" LA LETRA {letra}  NO ESTA EN LA PALABRA CLAVE ❌ ")
-    
+        intentos -= 1
+        print(f" LA LETRA {letra} NO ESTA EN LA PALABRA CLAVE ❌ ")
 
+    palabra_mostrada = ""
+    for letra_clave in CLAVE:
+        if letra_clave in letras_correctas:
+            palabra_mostrada += letra_clave
+        else:
+            palabra_mostrada += "_"
 
+    print(f"Palabra: {palabra_mostrada}")
 
-print("="*50)
+print("=" * 50)
 
-if ganó == 0 :
-    print(f"\n\t  LA PALABRA ES -> {CLAVE}   ")
+if gana:
+    print(f"\n\t FELICIDADES: LA PALABRA ES -> {CLAVE}")
+else:
+    print(f"\n\t LA PALABRA ES -> {CLAVE}")
 
 print("\n\t ..::   PROGRAMA FINALIZADO   ::..")
-    
